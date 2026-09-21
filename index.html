@@ -144,7 +144,9 @@
   li.done .name > span:first-child { text-decoration: line-through; text-decoration-thickness: 1px; }
   li.hidden { display: none; }
 
-  footer { margin-top: 2rem; font-size: .75rem; color: var(--ink-soft); }
+  footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .75rem; color: var(--ink-soft); }
+  footer p { margin: 0 0 .625rem; }
+  footer p:last-child { margin-bottom: 0; }
   @media (max-width: 24rem) { .wrap { padding-left: .75rem; padding-right: .75rem; } }
 </style>
 </head>
@@ -168,7 +170,12 @@
 
   <ul id="list"></ul>
 
-  <footer>必要数はロードストーンの告知ページの記載に基づきます。ウォロン・ホルンは上記に加えてウォロン・ホルン交換手形10個が必要です。</footer>
+  <footer>
+    <p>必要数はロードストーンの告知ページの記載に基づきます。ウォロン・ホルンは上記に加えてウォロン・ホルン交換手形10個が必要です。</p>
+    <p>「MogCollection」で収集すべきトムストーンの数を計算します。</p>
+    <p>本ツールは、メモ取りの際に収集した資料に基づいて作成されたものであり、著作権で保護された作品を直接使用しているわけではありません。ご利用は個人的な目的に限定し、二次利用はご遠慮ください。</p>
+    <p>FINAL FANTASY XIV © SQUARE ENIX CO., LTD. All Rights Reserved. 本ツールは非公式のファン制作ツールであり、SQUARE ENIXとは一切関係がなく、承認も受けていません。</p>
+  </footer>
 </div>
 
 <script>
