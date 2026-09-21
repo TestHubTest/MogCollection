@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>モグモグ★コレクション 交換チェックリスト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --paper: #eef1ee;
+    --panel: #f7f9f7;
+    --ink: #1d2a2f;
+    --ink-soft: #5c6b70;
+    --rule: #cdd6d4;
+    --accent: #1f6b6b;
+    --accent-soft: #d9e6e3;
+    --done: #93a3a4;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper: #12191b;
+      --panel: #192124;
+      --ink: #e4ebe8;
+      --ink-soft: #9aa9a9;
+      --rule: #2c383b;
+      --accent: #6fc0b4;
+      --accent-soft: #1f2e30;
+      --done: #66787a;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #12191b;
+      --panel: #192124;
+      --ink: #e4ebe8;
+      --ink-soft: #9aa9a9;
+      --rule: #2c383b;
+      --accent: #6fc0b4;
+      --accent-soft: #1f2e30;
+      --done: #66787a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #12191b;
+    --panel: #192124;
+    --ink: #e4ebe8;
+    --ink-soft: #9aa9a9;
+    --rule: #2c383b;
+    --accent: #6fc0b4;
+    --accent-soft: #1f2e30;
+    --done: #66787a;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 1.75rem 1rem 4rem; }
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    margin: 0 0 .25rem;
+  }
+  .sub { color: var(--ink-soft); font-size: .8125rem; margin: 0 0 1.5rem; }
+
+  .meter {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1rem 1.125rem;
+    margin-bottom: 1.25rem;
+  }
+  .meter-top { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; }
+  .remaining { font-size: 2rem; font-weight: 700; font-feature-settings: "tnum"; line-height: 1.1; }
+  .remaining small { font-size: .875rem; font-weight: 500; margin-left: .25rem; color: var(--ink-soft); }
+  .meter-note { font-size: .8125rem; color: var(--ink-soft); text-align: right; font-feature-settings: "tnum"; }
+  .bar { height: 5px; background: var(--accent-soft); border-radius: 3px; margin-top: .875rem; overflow: hidden; }
+  .bar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s ease; }
+
+  .tools { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-bottom: 1rem; }
+  button {
+    font: inherit;
+    font-size: .8125rem;
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    padding: .375rem .75rem;
+    cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  li { border-bottom: 1px solid var(--rule); }
+  label {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr auto;
+    align-items: baseline;
+    gap: .625rem;
+    padding: .75rem .25rem;
+    cursor: pointer;
+  }
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin: 0;
+    align-self: center;
+    border: 1.5px solid var(--ink-soft);
+    border-radius: 3px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+  }
+  input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+  input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px; top: 1px;
+    width: 4px; height: 9px;
+    border: solid var(--panel);
+    border-width: 0 2px 2px 0;
+    transform: rotate(42deg);
+  }
+  input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .name { min-width: 0; overflow-wrap: anywhere; }
+  .note { display: block; font-size: .75rem; color: var(--ink-soft); }
+  .cost { font-weight: 700; font-feature-settings: "tnum"; white-space: nowrap; }
+  .cost small { font-weight: 400; font-size: .75rem; color: var(--ink-soft); margin-left: .125rem; }
+  li.done .name, li.done .cost { color: var(--done); }
+  li.done .name > span:first-child { text-decoration: line-through; text-decoration-thickness: 1px; }
+  li.hidden { display: none; }
+
+  footer { margin-top: 2rem; font-size: .75rem; color: var(--ink-soft); }
+  @media (max-width: 24rem) { .wrap { padding-left: .75rem; padding-right: .75rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>モグモグ★コレクション ～天文に至る路 Part1～</h1>
+  <p class="sub">交換済みのものにチェックを入れると、残りに必要な希少トームストーン:天文1章の数が出ます。チェックはこの端末に保存されます。</p>
+
+  <div class="meter">
+    <div class="meter-top">
+      <div class="remaining"><span id="remain">0</span><small>個 まだ必要</small></div>
+      <div class="meter-note"><span id="doneCount">0</span> / 30 種 交換済み<br><span id="spent">0</span> 個 使用済み</div>
+    </div>
+    <div class="bar"><span id="barFill"></span></div>
+  </div>
+
+  <div class="tools">
+    <button id="toggleHide" type="button">交換済みを隠す</button>
+    <button id="reset" type="button">チェックをすべて外す</button>
+  </div>
+
+  <ul id="list"></ul>
+
+  <footer>必要数はロードストーンの告知ページの記載に基づきます。ウォロン・ホルンは上記に加えてウォロン・ホルン交換手形10個が必要です。</footer>
+</div>
+
+<script>
+(function () {
+  var ITEMS = [
+    { n: "ウォロン・ホルン", c: 100, note: "交換手形10個も必要" },
+    { n: "豆柴首巻", c: 50 },
+    { n: "ラムウクリスタル", c: 50 },
+    { n: "オーケストリオン譜:The Legendary Beast", c: 50 },
+    { n: "スカイワーカー・タンクトップ", c: 30 },
+    { n: "クラフトマン・エプロン", c: 30 },
+    { n: "トードヘッド", c: 30 },
+    { n: "トードスーツ", c: 30 },
+    { n: "演技教本:説明", c: 30 },
+    { n: "プチヴァーチュー", c: 30 },
+    { n: "イシュガルディアン・ハーフバード", c: 30 },
+    { n: "カムイの魔笛【青】", c: 30 },
+    { n: "MGPプラチナカード", c: 30 },
+    { n: "チーズフォンデュ", c: 20 },
+    { n: "コロポックルクロノメーター", c: 20 },
+    { n: "竹垣", c: 20 },
+    { n: "ディファイアントコート", c: 15 },
+    { n: "レッドシーフコート", c: 15 },
+    { n: "ゴーストシーフコート", c: 15 },
+    { n: "オーケストリオン譜:それは愛くぽ？", c: 15 },
+    { n: "古ぼけた地図S4", c: 15 },
+    { n: "古ぼけた地図S5", c: 15 },
+    { n: "カード:アナンタ", c: 10, note: "クエスト「母の寵愛」が必要" },
+    { n: "カード:コトカゼ", c: 10, note: "クエスト「ウルダハ商館へようこそ」が必要" },
+    { n: "カード:でぶチョコボ", c: 7, note: "クエスト「対話への旅路」が必要" },
+    { n: "ヘアカタログ:ロングヘア", c: 7 },
+    { n: "ドマキン", c: 7 },
+    { n: "ダルメルホイッスル", c: 7 },
+    { n: "エメラルド・バード", c: 5 },
+    { n: "マジックプリズム:ジョブマスター ×10", c: 1 }
+  ];
+  var KEY = "mogmog-2026-09-part1";
+  var TOTAL = ITEMS.reduce(function (s, i) { return s + i.c; }, 0);
+
+  var state = {};
+  try {
+    var saved = window.localStorage.getItem(KEY);
+    if (saved) { state = JSON.parse(saved) || {}; }
+  } catch (e) { state = {}; }
+
+  var list = document.getElementById("list");
+  var remainEl = document.getElementById("remain");
+  var doneEl = document.getElementById("doneCount");
+  var spentEl = document.getElementById("spent");
+  var barEl = document.getElementById("barFill");
+  var hideBtn = document.getElementById("toggleHide");
+  var resetBtn = document.getElementById("reset");
+  var hiding = false;
+
+  function save() {
+    try { window.localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function update() {
+    var spent = 0, done = 0;
+    ITEMS.forEach(function (item, i) {
+      if (state[i]) { spent += item.c; done += 1; }
+    });
+    remainEl.textContent = (TOTAL - spent).toLocaleString("ja-JP");
+    spentEl.textContent = spent.toLocaleString("ja-JP");
+    doneEl.textContent = done;
+    barEl.style.width = (TOTAL ? (spent / TOTAL) * 100 : 0) + "%";
+  }
+
+  ITEMS.forEach(function (item, i) {
+    var li = document.createElement("li");
+    var label = document.createElement("label");
+
+    var box = document.createElement("input");
+    box.type = "checkbox";
+    box.checked = !!state[i];
+
+    var name = document.createElement("span");
+    name.className = "name";
+    var title = document.createElement("span");
+    title.textContent = item.n;
+    name.appendChild(title);
+    if (item.note) {
+      var note = document.createElement("span");
+      note.className = "note";
+      note.textContent = item.note;
+      name.appendChild(note);
+    }
+
+    var cost = document.createElement("span");
+    cost.className = "cost";
+    cost.textContent = item.c;
+    var unit = document.createElement("small");
+    unit.textContent = "個";
+    cost.appendChild(unit);
+
+    label.appendChild(box);
+    label.appendChild(name);
+    label.appendChild(cost);
+    li.appendChild(label);
+    if (state[i]) { li.className = "done" + (hiding ? " hidden" : ""); }
+    list.appendChild(li);
+
+    box.addEventListener("change", function () {
+      state[i] = box.checked;
+      li.className = (box.checked ? "done" : "") + (box.checked && hiding ? " hidden" : "");
+      save();
+      update();
+    });
+  });
+
+  hideBtn.addEventListener("click", function () {
+    hiding = !hiding;
+    hideBtn.textContent = hiding ? "交換済みも表示" : "交換済みを隠す";
+    Array.prototype.forEach.call(list.children, function (li, i) {
+      li.className = (state[i] ? "done" : "") + (state[i] && hiding ? " hidden" : "");
+    });
+  });
+
+  resetBtn.addEventListener("click", function () {
+    state = {};
+    save();
+    Array.prototype.forEach.call(list.children, function (li) {
+      li.querySelector("input").checked = false;
+      li.className = "";
+    });
+    update();
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>
